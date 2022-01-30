@@ -1,9 +1,21 @@
-const data = require('./quotes.json');
+//app.js
+const url = "https://api.quotable.io/random";
+function generateQuote() {
+  fetch(url)
+    .then(function (data) {
+      return data.json();
+    })
+    .then(function (data) {
+      document.getElementById("quote").innerHTML = data.content;
+      document.getElementById("author").innerHTML = "- " + data.author;
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}
 
-let index = Math.floor(Math.random() * data.quotes.length);
-
-console.log(data.quotes.length)
-console.log(index)
-
-console.log("Quote", data.quotes[index].quote);
-console.log("Author", data.quotes[index].author);
+document
+  .getElementById("generate-quote")
+  .addEventListener("click", function () {
+    generateQuote();
+  });
